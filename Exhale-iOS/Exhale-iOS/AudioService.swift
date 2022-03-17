@@ -55,6 +55,8 @@ final class AudioService: AudioServiceProtocol {
     }
     
     func setVolume(_ volume: Float, fadeDuration: TimeInterval) {
+        self.volume = volume
+
         guard let player = player else {
             return
         }
