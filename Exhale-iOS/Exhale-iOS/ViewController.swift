@@ -8,12 +8,13 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    let audioService = AudioService.shared
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        audioService.play(filename: "test", type: "mp3")
     }
-
-
 }
 
