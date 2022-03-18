@@ -13,8 +13,10 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         audioService.play(filename: "test", type: "mp3")
+
+        let cache = ThemeCache()
+        cache.store(filename: "filename", item: Theme(name: "Test Theme"))
     }
 }
 
