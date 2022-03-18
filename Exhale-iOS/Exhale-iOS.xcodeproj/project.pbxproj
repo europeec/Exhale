@@ -10,6 +10,7 @@
 		F071D6D027E3C65200EAD5E8 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6CF27E3C65200EAD5E8 /* AudioService.swift */; };
 		F071D6D227E3CA2500EAD5E8 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F071D6D127E3CA2500EAD5E8 /* test.mp3 */; };
 		F071D6D627E4849400EAD5E8 /* ThemeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6D527E4849400EAD5E8 /* ThemeCache.swift */; };
+		F071D6DA27E4A3B700EAD5E8 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6D927E4A3B700EAD5E8 /* Downloader.swift */; };
 		F0BEC7BB27E33CE600EE0ED9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BEC7BA27E33CE600EE0ED9 /* AppDelegate.swift */; };
 		F0BEC7BD27E33CE600EE0ED9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BEC7BC27E33CE600EE0ED9 /* SceneDelegate.swift */; };
 		F0BEC7BF27E33CE600EE0ED9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BEC7BE27E33CE600EE0ED9 /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 		F071D6CF27E3C65200EAD5E8 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
 		F071D6D127E3CA2500EAD5E8 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		F071D6D527E4849400EAD5E8 /* ThemeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCache.swift; sourceTree = "<group>"; };
+		F071D6D927E4A3B700EAD5E8 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		F0BEC7B727E33CE600EE0ED9 /* Exhale-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Exhale-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F0BEC7BA27E33CE600EE0ED9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F0BEC7BC27E33CE600EE0ED9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 			children = (
 				F071D6CF27E3C65200EAD5E8 /* AudioService.swift */,
 				F071D6D827E4A29200EAD5E8 /* Cache */,
+				F071D6D927E4A3B700EAD5E8 /* Downloader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -168,6 +171,7 @@
 				F0BEC7BF27E33CE600EE0ED9 /* ViewController.swift in Sources */,
 				F0BEC7BB27E33CE600EE0ED9 /* AppDelegate.swift in Sources */,
 				F071D6D627E4849400EAD5E8 /* ThemeCache.swift in Sources */,
+				F071D6DA27E4A3B700EAD5E8 /* Downloader.swift in Sources */,
 				F0BEC7BD27E33CE600EE0ED9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
