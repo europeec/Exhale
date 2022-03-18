@@ -11,7 +11,9 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        let cache = ThemeCache()
+        
+        cache.store(filename: "filename", item: Theme(name: "Test Theme"))
     }
 
 
