@@ -1,10 +1,8 @@
 import Foundation
 
 protocol DownloadProtocol {
-    func download(from url: URL,
-                  progressDelegate: URLSessionDownloadDelegate)
-    
-    func resume(for url: URL, progressDelegate: URLSessionDownloadDelegate)
+    func download(from url: URL)
+    func resume(for url: URL)
     func pause(for url: URL)
     func cancel(for url: URL)
     func done(for url: URL)
@@ -14,21 +12,27 @@ final class Downloader: NSObject, DownloadProtocol {
     private var tasks = [URL: URLSessionDownloadTask]()
     private var resumeData = [URL: Data]()
     
-    func download(from url: URL, progressDelegate delegate: URLSessionDownloadDelegate) {
+    private let delegate: URLSessionDownloadDelegate
+    
+    init(progressDelegate delegate: URLSessionDownloadDelegate) {
+        self.delegate = delegate
+    }
+    
+    func download(from url: URL) {
         DispatchQueue.global().async {
             if self.tasks[url] == nil {
-                let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: .main)
+                let session = URLSession(configuration: .default, delegate: self.delegate, delegateQueue: .main)
                 let task = session.downloadTask(with: url)
                 task.resume()
                 
                 self.tasks[url] = task
             } else {
-                self.resume(for: url, progressDelegate: delegate)
+                self.resume(for: url)
             }
         }
     }
     
-    func resume(for url: URL, progressDelegate delegate: URLSessionDownloadDelegate) {
+    func resume(for url: URL) {
         if let data = resumeData[url] {
             let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: .main)
             let task = session.downloadTask(withResumeData: data)
@@ -37,7 +41,7 @@ final class Downloader: NSObject, DownloadProtocol {
             tasks[url] = task
         } else {
             tasks[url] = nil
-            download(from: url, progressDelegate: delegate)
+            download(from: url)
         }
     }
     

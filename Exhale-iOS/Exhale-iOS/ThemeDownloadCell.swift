@@ -5,10 +5,9 @@ final class ThemeDownloadCell: UITableViewCell {
     
     private var theme: Theme?
     private var indexPath: IndexPath?
-    private var delegate: ThemeDownloadCellDelegate?
-
-    var isLoading = false
-    var isDone = false
+//    private weak var delegate: ThemeDownloadCellDelegate?
+    
+    private var state: DownloadTaskState = .starting
     
     private lazy var progressBar: UIProgressView = {
         let progress = UIProgressView()
@@ -26,51 +25,51 @@ final class ThemeDownloadCell: UITableViewCell {
         ])
     }
     
-    func configure(theme: Theme, delegate: ThemeDownloadCellDelegate, at indexPath: IndexPath) {
+    func configure(data: ThemeDownloadCellModel) {
         setup()
-        self.theme = theme
-        self.delegate = delegate
-        self.indexPath = indexPath
-    }
-    
-    func select() {
-        guard let indexPath = indexPath else { return }
-        
-        if !isDone {
-            if isLoading {
-                delegate?.cell(at: indexPath, didUpdateState: .pause)
-                print("Pause")
-            } else {
-                print("Starting..")
-                delegate?.cell(at: indexPath, didUpdateState: .starting)
-            }
-            
-            isLoading = !isLoading
-        }
+        theme = data.theme
+        state = .starting
+        progressBar.progress = data.progress
     }
     
     private func setup() {
         addSubview(progressBar)
     }
-
-}
-
-extension ThemeDownloadCell: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        
-        isDone = true
-        guard let indexPath = indexPath else { return }
-        
-        delegate?.cell(at: indexPath, didUpdateState: .done(location: location))
-    }
     
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
-
-        guard let indexPath = indexPath else { return }
-
-        let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-        progressBar.progress = progress
-
-        delegate?.cell(at: indexPath, didUpdateState: .loading(progress: progress))
+    func updateState(_ state: DownloadTaskState) {
+        switch state {
+        case .loading(let progress):
+            progressBar.progress = progress
+        case .pause:
+            print("pause")
+        case .cancel:
+            print("cancel")
+        case .starting:
+            print("starting")
+        case .done(_):
+            print("done")
+        }
+        
     }
+
 }
+//
+//extension ThemeDownloadCell: URLSessionDownloadDelegate {
+//    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+//        
+//        isDone = true
+//        guard let indexPath = indexPath else { return }
+//        
+//        delegate?.cell(at: indexPath, didUpdateState: .done(location: location))
+//    }
+//    
+//    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+//
+//        guard let indexPath = indexPath else { return }
+//
+//        let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+//        progressBar.progress = progress
+//
+//        delegate?.cell(at: indexPath, didUpdateState: .loading(progress: progress))
+//    }
+//}

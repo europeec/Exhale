@@ -1,5 +1,5 @@
 import Foundation
 
-protocol ThemeDownloadCellDelegate {
+protocol ThemeDownloadCellDelegate: AnyObject {
     func cell(at indexPath: IndexPath, didUpdateState state: DownloadTaskState)
 }
