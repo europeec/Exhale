@@ -2,10 +2,13 @@ import UIKit
 
 final class ThemeDownloadCell: UITableViewCell {
     static let identifier = "ThemeDownloadCell"
-    static let nib = UINib(nibName: identifier, bundle: nil)
     
     private var theme: Theme?
-    private var downloader: Downloader?
+    private var indexPath: IndexPath?
+    private var delegate: ThemeDownloadCellDelegate?
+
+    var isLoading = false
+    var isDone = false
     
     private lazy var progressBar: UIProgressView = {
         let progress = UIProgressView()
@@ -23,38 +26,51 @@ final class ThemeDownloadCell: UITableViewCell {
         ])
     }
     
-    func configure(theme: Theme) {
+    func configure(theme: Theme, delegate: ThemeDownloadCellDelegate, at indexPath: IndexPath) {
         setup()
         self.theme = theme
-        guard let theme = self.theme else { return }
-        downloader = Downloader(url: theme.url, delegate: self)
+        self.delegate = delegate
+        self.indexPath = indexPath
     }
     
-    func setup() {
+    func select() {
+        guard let indexPath = indexPath else { return }
         
+        if !isDone {
+            if isLoading {
+                delegate?.cell(at: indexPath, didUpdateState: .pause)
+                print("Pause")
+            } else {
+                print("Starting..")
+                delegate?.cell(at: indexPath, didUpdateState: .starting)
+            }
+            
+            isLoading = !isLoading
+        }
+    }
+    
+    private func setup() {
         addSubview(progressBar)
     }
-    
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        if selected {
-            downloader?.download()
-        }
-    }
+
 }
 
-extension ThemeDownloadCell: DownloadDelegate {
-    func updateState(_ state: DownloadTaskState, for taskURL: URL) {
-        print(state)
+extension ThemeDownloadCell: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        
+        isDone = true
+        guard let indexPath = indexPath else { return }
+        
+        delegate?.cell(at: indexPath, didUpdateState: .done(location: location))
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
 
-        switch state {
-        case .loading(let progress):
-            progressBar.progress = progress
-        case .pause:
-            progressBar.progressTintColor = .cyan
-        case .cancel, .starting:
-            break
-        case .done(let location):
-            progressBar.progressTintColor = .green
-        }
+        guard let indexPath = indexPath else { return }
+
+        let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+        progressBar.progress = progress
+
+        delegate?.cell(at: indexPath, didUpdateState: .loading(progress: progress))
     }
 }

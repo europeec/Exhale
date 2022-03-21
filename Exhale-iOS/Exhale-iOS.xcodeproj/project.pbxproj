@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F06F7FA027E75B8F008A9C83 /* ThemeSourceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F7F9F27E75B8F008A9C83 /* ThemeSourceModel.swift */; };
+		F06F7FA227E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F7FA127E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift */; };
 		F071D6D027E3C65200EAD5E8 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6CF27E3C65200EAD5E8 /* AudioService.swift */; };
 		F071D6D227E3CA2500EAD5E8 /* test.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = F071D6D127E3CA2500EAD5E8 /* test.mp3 */; };
 		F071D6D627E4849400EAD5E8 /* ThemeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6D527E4849400EAD5E8 /* ThemeCache.swift */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F06F7F9F27E75B8F008A9C83 /* ThemeSourceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeSourceModel.swift; sourceTree = "<group>"; };
+		F06F7FA127E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDownloadCellDelegate.swift; sourceTree = "<group>"; };
 		F071D6CF27E3C65200EAD5E8 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
 		F071D6D127E3CA2500EAD5E8 /* test.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = test.mp3; sourceTree = "<group>"; };
 		F071D6D527E4849400EAD5E8 /* ThemeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCache.swift; sourceTree = "<group>"; };
@@ -103,6 +107,8 @@
 				F071D6D727E4A25500EAD5E8 /* Services */,
 				F0BEC7BE27E33CE600EE0ED9 /* ViewController.swift */,
 				F071D6E027E5D18200EAD5E8 /* ThemeDownloadCell.swift */,
+				F06F7FA127E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift */,
+				F06F7F9F27E75B8F008A9C83 /* ThemeSourceModel.swift */,
 				F0BEC7C027E33CE600EE0ED9 /* Main.storyboard */,
 				F0BEC7C327E33CE900EE0ED9 /* Assets.xcassets */,
 				F0BEC7C527E33CE900EE0ED9 /* LaunchScreen.storyboard */,
@@ -184,11 +190,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F06F7FA027E75B8F008A9C83 /* ThemeSourceModel.swift in Sources */,
 				F071D6D027E3C65200EAD5E8 /* AudioService.swift in Sources */,
 				F071D6DD27E4F3E400EAD5E8 /* DownloadDelegate.swift in Sources */,
 				F071D6E127E5D18200EAD5E8 /* ThemeDownloadCell.swift in Sources */,
 				F0BEC7BF27E33CE600EE0ED9 /* ViewController.swift in Sources */,
 				F0BEC7BB27E33CE600EE0ED9 /* AppDelegate.swift in Sources */,
+				F06F7FA227E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift in Sources */,
 				F071D6D627E4849400EAD5E8 /* ThemeCache.swift in Sources */,
 				F071D6DA27E4A3B700EAD5E8 /* Downloader.swift in Sources */,
 				F071D6DF27E4F42100EAD5E8 /* DownloadTaskState.swift in Sources */,
