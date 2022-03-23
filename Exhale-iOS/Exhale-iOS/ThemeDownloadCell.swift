@@ -7,7 +7,7 @@ final class ThemeDownloadCell: UITableViewCell {
     private var indexPath: IndexPath?
 //    private weak var delegate: ThemeDownloadCellDelegate?
     
-    private var state: DownloadTaskState = .starting
+    var state: DownloadTaskState = .none
     
     private lazy var progressBar: UIProgressView = {
         let progress = UIProgressView()
@@ -28,7 +28,7 @@ final class ThemeDownloadCell: UITableViewCell {
     func configure(data: ThemeDownloadCellModel) {
         setup()
         theme = data.theme
-        state = .starting
+        updateState(data.state)
         progressBar.progress = data.progress
     }
     
@@ -37,6 +37,7 @@ final class ThemeDownloadCell: UITableViewCell {
     }
     
     func updateState(_ state: DownloadTaskState) {
+        self.state = state
         switch state {
         case .loading(let progress):
             progressBar.progress = progress
@@ -48,6 +49,8 @@ final class ThemeDownloadCell: UITableViewCell {
             print("starting")
         case .done(_):
             print("done")
+        case .none:
+            progressBar.progress = 0
         }
         
     }

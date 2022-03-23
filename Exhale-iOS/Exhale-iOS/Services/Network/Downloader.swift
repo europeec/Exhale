@@ -1,68 +1,92 @@
 import Foundation
 
 protocol DownloadProtocol {
-    func download(from url: URL)
-    func resume(for url: URL)
-    func pause(for url: URL)
-    func cancel(for url: URL)
-    func done(for url: URL)
+    func download(from url: URL, at indexPath: IndexPath)
+    func resume(at indexPath: IndexPath)
+    func pause(at indexPath: IndexPath)
+    func cancel(at indexPath: IndexPath)
 }
 
 final class Downloader: NSObject, DownloadProtocol {
-    private var tasks = [URL: URLSessionDownloadTask]()
-    private var resumeData = [URL: Data]()
+    private let delegate: DownloadDelegate
     
-    private let delegate: URLSessionDownloadDelegate
+    private var tasks = [IndexPath: URLSessionDownloadTask]()
+    private var resumeData = [IndexPath: Data]()
     
-    init(progressDelegate delegate: URLSessionDownloadDelegate) {
+    init(progressDelegate delegate: DownloadDelegate) {
         self.delegate = delegate
     }
     
-    func download(from url: URL) {
+    func download(from url: URL, at indexPath: IndexPath) {
         DispatchQueue.global().async {
-            if self.tasks[url] == nil {
-                let session = URLSession(configuration: .default, delegate: self.delegate, delegateQueue: .main)
+            if self.tasks[indexPath] == nil {
+                let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
                 let task = session.downloadTask(with: url)
                 task.resume()
                 
-                self.tasks[url] = task
+                self.tasks[indexPath] = task
+        
             } else {
-                self.resume(for: url)
+                self.resume(at: indexPath)
             }
         }
     }
     
-    func resume(for url: URL) {
-        if let data = resumeData[url] {
-            let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: .main)
+    func resume(at indexPath: IndexPath) {
+        guard let url = tasks[indexPath]?.currentRequest?.url else { return }
+        
+        if let data = resumeData[indexPath] {
+            let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
             let task = session.downloadTask(withResumeData: data)
             task.resume()
-            
-            tasks[url] = task
+            tasks[indexPath] = task
         } else {
-            tasks[url] = nil
-            download(from: url)
+            tasks[indexPath] = nil
+            download(from: url, at: indexPath)
         }
     }
     
-    func pause(for url: URL) {
-        tasks[url]?.cancel(byProducingResumeData: { data in
+    func pause(at indexPath: IndexPath) {
+        tasks[indexPath]?.cancel(byProducingResumeData: { data in
             if data != nil {
-                self.resumeData[url] = data
+                self.resumeData[indexPath] = data
             }
         })
+        delegate.updateState(.pause, at: indexPath)
     }
 
-    func cancel(for url: URL) {
-        tasks[url]?.cancel()
-        tasks[url] = nil
-        resumeData[url] = nil
+    func cancel(at indexPath: IndexPath) {
+        tasks[indexPath]?.cancel()
+        tasks[indexPath] = nil
+        resumeData[indexPath] = nil
+        delegate.updateState(.cancel, at: indexPath)
     }
     
-    func done(for url: URL) {
-        tasks[url] = nil
-        resumeData[url] = nil
+//    func done(for url: URL) {
+//        tasks[url] = nil
+//        resumeData[url] = nil
+//
+//        print("Done, count tasks: \(tasks.count), resumeData: \(resumeData.count)")
+//    }
+    
+    private func getIndexPath(from task: URLSessionDownloadTask) -> IndexPath? {
+        guard let indexPath = tasks.filter({ $0.value == task }).first?.key else { return nil }
+        return indexPath
+    }
+}
+
+extension Downloader: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         
-        print("Done, count tasks: \(tasks.count), resumeData: \(resumeData.count)")
+        guard let indexPath = getIndexPath(from: downloadTask) else { return }
+        delegate.updateState(.done(location: location), at: indexPath)
+        
+    }
+    
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didWriteData bytesWritten: Int64, totalBytesWritten: Int64, totalBytesExpectedToWrite: Int64) {
+        guard let indexPath = getIndexPath(from: downloadTask) else { return }
+        
+        let progress = Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
+        delegate.updateState(.loading(progress: progress), at: indexPath)
     }
 }

@@ -2,14 +2,11 @@ import Foundation
 
 final class ThemeDownloadCellModel {
     let theme: Theme
-    var progress: Float
-    var isDone: Bool
-    var isLoading: Bool
+    var state: DownloadTaskState
+    var progress: Float = 0
     
-    init(theme: Theme, progress: Float, isDone: Bool, isLoading: Bool) {
+    init(theme: Theme, state: DownloadTaskState) {
         self.theme = theme
-        self.progress = progress
-        self.isDone = isDone
-        self.isLoading = isLoading
+        self.state = state
     }
 }
