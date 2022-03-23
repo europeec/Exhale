@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     
@@ -22,18 +23,48 @@ class ViewController: UIViewController {
     private var cellsData = mockThemes.map { ThemeDownloadCellModel(theme: $0, state: DownloadTaskState.none )}
     
     private lazy var downloader = Downloader(progressDelegate: self)
+    lazy var urlVideo = Bundle.main.url(forResource:"background", withExtension: "mp4")!
+    lazy var videoLayer = VideoPlayerLayer()
+    
+    private var avPlayerLayer: AVPlayerLayer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+//        let urlVideo = Bundle.main.url(forResource:"background", withExtension: "mp4")!
+//        let avPlayer = AVPlayer(url: urlVideo)
         
-        view.addSubview(tableView)
+//        avPlayer.play()
+//        avPlayerLayer = AVPlayerLayer(player: avPlayer)
+//        avPlayerLayer.videoGravity = .resizeAspectFill
+//        avPlayerLayer.contentsGravity = .left
+        videoLayer.play(from: urlVideo)
+        
+        view.layer.addSublayer(videoLayer)
+        
+//        let avPlayer = AVPlayer()
+        //
+//        view.backgroundColor = .clear
+//        view.layer.insertSublayer(videoLayer, at: 0)
+//        view.addSubview(tableView)
         
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.frame = view.bounds
+        videoLayer.frame = view.bounds
+        
+//        tableView.frame = view.bounds
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            print("after")
+            self.videoLayer.play(from: self.urlVideo)
+        }
     }
 }
 
