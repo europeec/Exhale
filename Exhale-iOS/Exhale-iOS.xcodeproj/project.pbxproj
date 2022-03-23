@@ -55,6 +55,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F00C016727EB14D700CC4AA4 /* ThemeDownoadCell */ = {
+			isa = PBXGroup;
+			children = (
+				F071D6E027E5D18200EAD5E8 /* ThemeDownloadCell.swift */,
+				F06F7FA127E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift */,
+				F06F7F9F27E75B8F008A9C83 /* ThemeDownloadCellModel.swift */,
+			);
+			path = ThemeDownoadCell;
+			sourceTree = "<group>";
+		};
 		F071D6D727E4A25500EAD5E8 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -106,9 +116,7 @@
 				F0BEC7BC27E33CE600EE0ED9 /* SceneDelegate.swift */,
 				F071D6D727E4A25500EAD5E8 /* Services */,
 				F0BEC7BE27E33CE600EE0ED9 /* ViewController.swift */,
-				F071D6E027E5D18200EAD5E8 /* ThemeDownloadCell.swift */,
-				F06F7FA127E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift */,
-				F06F7F9F27E75B8F008A9C83 /* ThemeDownloadCellModel.swift */,
+				F00C016727EB14D700CC4AA4 /* ThemeDownoadCell */,
 				F0BEC7C027E33CE600EE0ED9 /* Main.storyboard */,
 				F0BEC7C327E33CE900EE0ED9 /* Assets.xcassets */,
 				F0BEC7C527E33CE900EE0ED9 /* LaunchScreen.storyboard */,
