@@ -45,5 +45,6 @@ final class ThemeCache: CacheProtocol {
 // MOCK
 struct Theme {
     let name: String
+    let url: URL
     
 }

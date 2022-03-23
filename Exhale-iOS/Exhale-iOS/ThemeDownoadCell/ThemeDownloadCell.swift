@@ -1,0 +1,55 @@
+import UIKit
+
+final class ThemeDownloadCell: UITableViewCell {
+    static let identifier = "ThemeDownloadCell"
+    
+    private var theme: Theme?
+    private var indexPath: IndexPath?
+    
+    var state: DownloadTaskState = .none
+    
+    private lazy var progressBar: UIProgressView = {
+        let progress = UIProgressView()
+        progress.translatesAutoresizingMaskIntoConstraints = false
+        return progress
+    }()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        NSLayoutConstraint.activate([
+            progressBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10),
+            progressBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10),
+            progressBar.centerYAnchor.constraint(equalTo: centerYAnchor)
+        ])
+    }
+    
+    func configure(data: ThemeDownloadCellModel) {
+        setup()
+        theme = data.theme
+        updateState(data.state)
+        progressBar.progress = data.progress
+    }
+    
+    private func setup() {
+        addSubview(progressBar)
+    }
+    
+    func updateState(_ state: DownloadTaskState) {
+        self.state = state
+        switch state {
+        case .loading(let progress):
+            progressBar.progress = progress
+        case .pause:
+            print("pause")
+        case .cancel:
+            print("cancel")
+        case .starting:
+            print("starting")
+        case .done(_):
+            print("done")
+        case .none:
+            progressBar.progress = 0
+        }
+    }
+}
