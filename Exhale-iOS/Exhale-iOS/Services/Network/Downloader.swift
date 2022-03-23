@@ -18,7 +18,8 @@ final class Downloader: NSObject, DownloadProtocol {
     }
     
     func download(from url: URL, at indexPath: IndexPath) {
-        DispatchQueue.global().async {
+        DispatchQueue.global().async { [weak self] in
+            guard let self = self else { return }
             if self.tasks[indexPath] == nil {
                 let session = URLSession(configuration: .default, delegate: self, delegateQueue: .main)
                 let task = session.downloadTask(with: url)
@@ -61,14 +62,7 @@ final class Downloader: NSObject, DownloadProtocol {
         resumeData[indexPath] = nil
         delegate.updateState(.cancel, at: indexPath)
     }
-    
-//    func done(for url: URL) {
-//        tasks[url] = nil
-//        resumeData[url] = nil
-//
-//        print("Done, count tasks: \(tasks.count), resumeData: \(resumeData.count)")
-//    }
-    
+
     private func getIndexPath(from task: URLSessionDownloadTask) -> IndexPath? {
         guard let indexPath = tasks.filter({ $0.value == task }).first?.key else { return nil }
         return indexPath
