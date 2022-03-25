@@ -26,18 +26,60 @@ class ViewController: UIViewController {
     private lazy var downloader = Downloader(progressDelegate: self)
     lazy var urlVideo = Bundle.main.url(forResource:"background", withExtension: "mp4")!
     lazy var videoLayer = VideoPlayerLayer(statusObserver: self)
+
+    private lazy var blurView = CustomBlurEffectView(style: .systemUltraThinMaterial, intensity: 0.3)
+    
+    private lazy var slider: UISlider = {
+        let slider = UISlider()
+        slider.maximumValue = 1
+        slider.minimumValue = 0
+        slider.translatesAutoresizingMaskIntoConstraints = false
+        
+        return slider
+    }()
+    
+    private lazy var testView: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 10
+        view.layer.borderColor = UIColor.white.cgColor
+//        let blurLayer = BlurLayer(blurEffect: .dark)
+//        view.addSubview(blurLayer)
+        view.addSubview(blurView)
+        blurView.clipsToBounds = true
+        view.clipsToBounds = true
+        return view
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         videoLayer.play(from: urlVideo)
         view.layer.addSublayer(videoLayer)
+        
+        view.addSubview(slider)
+        view.addSubview(testView)
+        
+        testView.layer.cornerRadius = 50
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         videoLayer.frame = view.bounds
+        NSLayoutConstraint.activate([
+            testView.topAnchor.constraint(equalTo: view.topAnchor, constant: 400),
+            testView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            testView.widthAnchor.constraint(equalToConstant: 100),
+            testView.heightAnchor.constraint(equalTo: testView.widthAnchor),
+            
+            slider.widthAnchor.constraint(equalToConstant: view.frame.width - 40),
+            slider.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            slider.topAnchor.constraint(equalTo: testView.bottomAnchor, constant: 40)
+        ])
+        
+        blurView.frame = testView.bounds
     }
 }
 

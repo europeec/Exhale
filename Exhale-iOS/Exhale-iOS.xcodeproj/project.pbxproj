@@ -11,6 +11,7 @@
 		F00C016D27EB1E6600CC4AA4 /* background.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = F00C016C27EB1E6600CC4AA4 /* background.mp4 */; };
 		F00C017127EC7AC700CC4AA4 /* VideoPlayerLayerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00C017027EC7AC700CC4AA4 /* VideoPlayerLayerDelegate.swift */; };
 		F00C017427EC805D00CC4AA4 /* VideoPlayerLayerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00C017327EC805D00CC4AA4 /* VideoPlayerLayerState.swift */; };
+		F00C017827EE512600CC4AA4 /* CustomBlurEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F00C017727EE512600CC4AA4 /* CustomBlurEffectView.swift */; };
 		F06F7FA027E75B8F008A9C83 /* ThemeDownloadCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F7F9F27E75B8F008A9C83 /* ThemeDownloadCellModel.swift */; };
 		F06F7FA227E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06F7FA127E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift */; };
 		F071D6D027E3C65200EAD5E8 /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F071D6CF27E3C65200EAD5E8 /* AudioService.swift */; };
@@ -33,6 +34,7 @@
 		F00C016C27EB1E6600CC4AA4 /* background.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = background.mp4; sourceTree = "<group>"; };
 		F00C017027EC7AC700CC4AA4 /* VideoPlayerLayerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerLayerDelegate.swift; sourceTree = "<group>"; };
 		F00C017327EC805D00CC4AA4 /* VideoPlayerLayerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPlayerLayerState.swift; sourceTree = "<group>"; };
+		F00C017727EE512600CC4AA4 /* CustomBlurEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBlurEffectView.swift; sourceTree = "<group>"; };
 		F06F7F9F27E75B8F008A9C83 /* ThemeDownloadCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDownloadCellModel.swift; sourceTree = "<group>"; };
 		F06F7FA127E8A6F0008A9C83 /* ThemeDownloadCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeDownloadCellDelegate.swift; sourceTree = "<group>"; };
 		F071D6CF27E3C65200EAD5E8 /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
@@ -81,6 +83,15 @@
 				F00C017327EC805D00CC4AA4 /* VideoPlayerLayerState.swift */,
 			);
 			path = VideoPlayerLayer;
+			sourceTree = "<group>";
+		};
+		F00C017927EE5B9300CC4AA4 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				F00C017727EE512600CC4AA4 /* CustomBlurEffectView.swift */,
+				F00C017227EC804400CC4AA4 /* VideoPlayerLayer */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		F071D6D727E4A25500EAD5E8 /* Services */ = {
@@ -134,7 +145,7 @@
 				F0BEC7BC27E33CE600EE0ED9 /* SceneDelegate.swift */,
 				F071D6D727E4A25500EAD5E8 /* Services */,
 				F0BEC7BE27E33CE600EE0ED9 /* ViewController.swift */,
-				F00C017227EC804400CC4AA4 /* VideoPlayerLayer */,
+				F00C017927EE5B9300CC4AA4 /* Common */,
 				F00C016727EB14D700CC4AA4 /* ThemeDownoadCell */,
 				F0BEC7C027E33CE600EE0ED9 /* Main.storyboard */,
 				F00C016C27EB1E6600CC4AA4 /* background.mp4 */,
@@ -232,6 +243,7 @@
 				F071D6DA27E4A3B700EAD5E8 /* Downloader.swift in Sources */,
 				F071D6DF27E4F42100EAD5E8 /* DownloadTaskState.swift in Sources */,
 				F00C017427EC805D00CC4AA4 /* VideoPlayerLayerState.swift in Sources */,
+				F00C017827EE512600CC4AA4 /* CustomBlurEffectView.swift in Sources */,
 				F0BEC7BD27E33CE600EE0ED9 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
