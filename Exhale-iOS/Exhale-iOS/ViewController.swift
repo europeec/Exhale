@@ -20,51 +20,24 @@ class ViewController: UIViewController {
     }()
     
     static let url = URL(string: "https://source.unsplash.com/random/8000x8000")!
+    
     private var cellsData = mockThemes.map { ThemeDownloadCellModel(theme: $0, state: DownloadTaskState.none )}
     
     private lazy var downloader = Downloader(progressDelegate: self)
     lazy var urlVideo = Bundle.main.url(forResource:"background", withExtension: "mp4")!
-    lazy var videoLayer = VideoPlayerLayer()
-    
-    private var avPlayerLayer: AVPlayerLayer!
+    lazy var videoLayer = VideoPlayerLayer(statusObserver: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        let urlVideo = Bundle.main.url(forResource:"background", withExtension: "mp4")!
-//        let avPlayer = AVPlayer(url: urlVideo)
-        
-//        avPlayer.play()
-//        avPlayerLayer = AVPlayerLayer(player: avPlayer)
-//        avPlayerLayer.videoGravity = .resizeAspectFill
-//        avPlayerLayer.contentsGravity = .left
         videoLayer.play(from: urlVideo)
-        
         view.layer.addSublayer(videoLayer)
-        
-//        let avPlayer = AVPlayer()
-        //
-//        view.backgroundColor = .clear
-//        view.layer.insertSublayer(videoLayer, at: 0)
-//        view.addSubview(tableView)
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
         videoLayer.frame = view.bounds
-        
-//        tableView.frame = view.bounds
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            print("after")
-            self.videoLayer.play(from: self.urlVideo)
-        }
     }
 }
 
@@ -115,6 +88,13 @@ extension ViewController: DownloadDelegate {
         }
     }
 }
+
+extension ViewController: VideoPlayerLayerDelegate {
+    func videoLayer(_ layer: VideoPlayerLayer, updateStatus status: VideoPlayerLayerState) {
+        print(status)
+    }
+}
+
 let mockThemes = [Theme(name: "First", url: URL(string: "https://source.unsplash.com/random/8000x8000")!),
                   Theme(name: "second", url: URL(string: "https://source.unsplash.com/random/12000x12000")!),
                   Theme(name: "First", url: URL(string: "https://source.unsplash.com/random/11000x11000")!),
