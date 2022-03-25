@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AVFoundation
 
 class ViewController: UIViewController {
     
@@ -19,21 +20,24 @@ class ViewController: UIViewController {
     }()
     
     static let url = URL(string: "https://source.unsplash.com/random/8000x8000")!
+    
     private var cellsData = mockThemes.map { ThemeDownloadCellModel(theme: $0, state: DownloadTaskState.none )}
     
     private lazy var downloader = Downloader(progressDelegate: self)
+    lazy var urlVideo = Bundle.main.url(forResource:"background", withExtension: "mp4")!
+    lazy var videoLayer = VideoPlayerLayer(statusObserver: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.addSubview(tableView)
-        
+
+        videoLayer.play(from: urlVideo)
+        view.layer.addSublayer(videoLayer)
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        tableView.frame = view.bounds
+        videoLayer.frame = view.bounds
     }
 }
 
@@ -84,6 +88,13 @@ extension ViewController: DownloadDelegate {
         }
     }
 }
+
+extension ViewController: VideoPlayerLayerDelegate {
+    func videoLayer(_ layer: VideoPlayerLayer, updateStatus status: VideoPlayerLayerState) {
+        print(status)
+    }
+}
+
 let mockThemes = [Theme(name: "First", url: URL(string: "https://source.unsplash.com/random/8000x8000")!),
                   Theme(name: "second", url: URL(string: "https://source.unsplash.com/random/12000x12000")!),
                   Theme(name: "First", url: URL(string: "https://source.unsplash.com/random/11000x11000")!),
